@@ -24,32 +24,32 @@ public class InvoiceSummary {
 		return result;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		InvoiceSummary other = (InvoiceSummary) obj;
-		if (Double.doubleToLongBits(avgFare) != Double.doubleToLongBits(other.avgFare))
-			return false;
-		if (noOfRides != other.noOfRides)
-			return false;
-		if (Double.doubleToLongBits(totalFare) != Double.doubleToLongBits(other.totalFare))
-			return false;
-		return true;
-	}
-
 //	@Override
 //	public boolean equals(Object obj) {
 //		if (this == obj)
 //			return true;
-//		if (obj == null || getClass() != obj.getClass())
+//		if (obj == null)
 //			return false;
-//		InvoiceSummary that = (InvoiceSummary) obj;
-//		return noOfRides == that.noOfRides && Double.compare(that.totalFare, totalFare) == 0
-//				&& Double.compare(that.avgFare, avgFare) == 0;
+//		if (getClass() != obj.getClass())
+//			return false;
+//		InvoiceSummary other = (InvoiceSummary) obj;
+//		if (Double.doubleToLongBits(avgFare) != Double.doubleToLongBits(other.avgFare))
+//			return false;
+//		if (noOfRides != other.noOfRides)
+//			return false;
+//		if (Double.doubleToLongBits(totalFare) != Double.doubleToLongBits(other.totalFare))
+//			return false;
+//		return true;
 //	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null || getClass() != obj.getClass())
+			return false;
+		InvoiceSummary that = (InvoiceSummary) obj;
+		return noOfRides == that.noOfRides && Double.compare(that.totalFare, totalFare) == 0
+				&& Double.compare(that.avgFare, avgFare) == 0;
+	}
 }

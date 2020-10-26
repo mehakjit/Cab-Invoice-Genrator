@@ -30,9 +30,10 @@ public class InvoiceServiceTest {
 	}
 
 	@Test
-	public void givenMultipleRideReturnTotalFare() {
-		Ride[] rides = { new Ride(2.0, 5), new Ride(0.1, 1) };
-		InvoiceSummary summary = invoiceGenerator.calculateFare(rides);
+	public void givenMultipleRideReturnInvoiceSummary() {
+		Invoice invoice = new Invoice();
+		Ride[] rides = { new Ride(2.0, 5, Ride.RideType.NORMAL), new Ride(0.1, 1, Ride.RideType.NORMAL) };
+		InvoiceSummary summary = invoice.calculateFare(rides);
 		InvoiceSummary expectedSummary = new InvoiceSummary(2, 30.0);
 		Assert.assertEquals(expectedSummary, summary);
 	}
@@ -40,10 +41,20 @@ public class InvoiceServiceTest {
 	@Test
 	public void givenUserIDAndRides_ShouldReturnInvoiceSummary() {
 		String userId="a@b.com";
-		Ride[] rides = { new Ride(2.0, 5), new Ride(0.1, 1) };
-		invoiceService.addRides(userId, rides);
-		InvoiceSummary summary = invoiceService.getInvoiceSummary(userId);
-		InvoiceSummary expectedInvoiceSummary = new InvoiceSummary(2, 30.0);
-		Assert.assertEquals(expectedInvoiceSummary, summary);
+		RideRepository rideRepository = new RideRepository();
+		Ride[] rides = { new Ride(2.0, 5, Ride.RideType.NORMAL), new Ride(0.1, 1, Ride.RideType.PREMIUM) };
+		rideRepository.addRides(userId, rides);
+		Ride[] userRides = rideRepository.getRides(userId);
+		Assert.assertEquals(rides[1], userRides[1]);
 	}
+	
+	@Test
+	public void givenMultipleTypeRideReturnInvoiceSummary() {
+		Invoice invoice = new Invoice();
+		Ride[] rides = { new Ride(2.0, 5, Ride.RideType.PREMIUM), new Ride(0.1, 1, Ride.RideType.NORMAL) };
+		InvoiceSummary summary = invoice.calculateFare(rides);
+		InvoiceSummary expectedSummary = new InvoiceSummary(2, 45.0);
+		Assert.assertEquals(expectedSummary, summary);
+	}
+	
 }
